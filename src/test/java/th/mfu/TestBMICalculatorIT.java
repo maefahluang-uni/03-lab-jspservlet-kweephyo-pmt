@@ -68,5 +68,27 @@ public class TestBMICalculatorIT {
             _logger.info("IT1 test passed");
         }
     }
+    @Test
+public void testCalculate3() {
+
+    // Make a HTTP GET request to retrieve the calculated result for a normal-built person.
+    try (Response response = client.target(WEB_URI + "?weight=80&height=1.5").request().get()) {
+
+        // Check that the HTTP response code is 200 OK.
+        int responseCode = response.getStatus();
+        assertEquals(200, responseCode);
+
+        String jsonResponse = response.readEntity(String.class);
+
+        // Check if the response contains the expected result (e.g., 22).
+        assertThat(jsonResponse, CoreMatchers.containsString("Result is 36"));
+
+        // Check if the response indicates the person is "normal" built.
+        assertThat(jsonResponse, CoreMatchers.containsString("extremely obese"));
+
+        _logger.info("IT1 test passed");
+    }
+}
+
 
 }
